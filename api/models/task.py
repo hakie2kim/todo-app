@@ -17,3 +17,5 @@ class Done(Base):
     id=Column(Integer, primary_key=True)
 
     task=relationship("Task", back_populates="done")
+
+    task_id=Column(Integer, ForeignKey('tasks.id'))

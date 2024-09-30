@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 
 class TaskBase(BaseModel):
-    title: str = Field(None, example="세탁소에 맡긴 것을 찾으러 가기")
+    title: str | None = Field(None, example="세탁소에 맡긴 것을 찾으러 가기")
 
 class TaskCreate(TaskBase):
     pass
