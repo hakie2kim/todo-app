@@ -31,9 +31,13 @@ def get_task(db: Session, task_id: int) -> task_schema.Task | None:
 
     return result.scalars().first()
 
-def update_task(db: Session, task_create: task_schema.TaskCreate, original: task_schema.Task) -> task_schema.Task:
+def update_task(db: Session, task_create: task_schema.TaskCreate, original: task_model.Task) -> task_schema.Task:
     original.title = task_create.title
     db.add(original)
     db.commit()
     db.refresh(original)
     return original
+
+def delete_task(db: Session, original: task_model.Task) -> None:
+    db.delete(original)
+    db.commit()
