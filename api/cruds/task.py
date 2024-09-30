@@ -23,3 +23,17 @@ def get_task_with_done(db: Session) -> list[tuple[int, str, bool]]:
 
     return result.all()
 
+def get_task(db: Session, task_id: int) -> task_schema.Task | None:
+    result: Result = db.execute(
+        select(task_model.Task).filter(task_model.Task.id == task_id)
+        # select(task_model.Task).where(task_model.Task.id == id)
+    )
+
+    return result.scalars().first()
+
+def update_task(db: Session, task_create: task_schema.TaskCreate, original: task_schema.Task) -> task_schema.Task:
+    original.title = task_create.title
+    db.add(original)
+    db.commit()
+    db.refresh(original)
+    return original
